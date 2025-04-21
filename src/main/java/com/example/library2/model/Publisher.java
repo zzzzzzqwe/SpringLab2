@@ -4,22 +4,22 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "publisher")
     private List<Book> books;
 
-    public List<Book> getBooks() {
-        return books;
+    public Long getId() {
+        return id;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -30,11 +30,11 @@ public class Category {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
