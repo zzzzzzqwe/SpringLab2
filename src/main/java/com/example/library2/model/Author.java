@@ -5,12 +5,21 @@ import java.util.List;
 
 @Entity
 public class Author {
-    public Long getId() {
-        return id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Book> books;
+
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public String getName() {
@@ -21,20 +30,11 @@ public class Author {
         this.name = name;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public Long getId() {
+        return id;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Book> books;
-
+}
