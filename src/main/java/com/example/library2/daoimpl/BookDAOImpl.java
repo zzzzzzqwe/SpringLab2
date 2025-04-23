@@ -52,9 +52,31 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public void delete(Long id) {
-        Book book = getSession().get(Book.class, id);
+        Session session = getSession();
+        Book book = session.get(Book.class, id);
+
         if (book != null) {
-            getSession().remove(book);
+            if (book.getAuthor() != null) {
+                book.getAuthor().getBooks().remove(book);
+            }
+            if (book.getCategory() != null) {
+                book.getCategory().getBooks().remove(book);
+            }
+            if (book.getPublisher() != null) {
+                book.getPublisher().getBooks().remove(book);
+            }
+            if (book.getLibrary() != null) {
+                book.getLibrary().getBooks().remove(book);
+            }
+            book.setAuthor(null);
+            book.setCategory(null);
+            book.setPublisher(null);
+            book.setLibrary(null);
+
+            session.merge(book);
+            session.flush();
+            session.remove(book);
         }
     }
+
 }
