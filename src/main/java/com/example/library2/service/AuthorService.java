@@ -1,10 +1,12 @@
 package com.example.library2.service;
 
 import com.example.library2.dao.AuthorDAO;
+import com.example.library2.dto.AuthorDTO;
 import com.example.library2.model.Author;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -15,22 +17,27 @@ public class AuthorService {
         this.authorDAO = authorDAO;
     }
 
-    public List<Author> getAllAuthors() {
-        return authorDAO.findAll();
+    public List<AuthorDTO> getAllAuthors() {
+        return authorDAO.findAll().stream()
+                .map(author -> new AuthorDTO(author.getId(), author.getName()))
+                .collect(Collectors.toList());
     }
 
-    public Author getAuthorById(Long id) {
-        return authorDAO.findById(id);
+    public AuthorDTO getAuthorById(Long id) {
+        Author author = authorDAO.findById(id);
+        return author != null ? new AuthorDTO(author.getId(), author.getName()) : null;
     }
 
-    public void createAuthor(Author author) {
+    public void createAuthor(AuthorDTO authorDTO) {
+        Author author = new Author();
+        author.setName(authorDTO.getName());
         authorDAO.save(author);
     }
 
-    public void updateAuthor(Long id, Author updated) {
+    public void updateAuthor(Long id, AuthorDTO authorDTO) {
         Author existing = authorDAO.findById(id);
         if (existing != null) {
-            existing.setName(updated.getName());
+            existing.setName(authorDTO.getName());
             authorDAO.update(existing);
         }
     }

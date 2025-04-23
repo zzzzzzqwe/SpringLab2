@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 public class BookService {
 
@@ -32,12 +31,14 @@ public class BookService {
                 .map(b -> new BookDTO(
                         b.getId(),
                         b.getTitle(),
-                        b.getAuthor().getId(),
-                        b.getCategory().getId(),
-                        b.getPublisher().getId(),
-                        b.getLibrary().getId()))
+                        b.getAuthor() != null ? b.getAuthor().getId() : null,
+                        b.getCategory() != null ? b.getCategory().getId() : null,
+                        b.getPublisher() != null ? b.getPublisher().getId() : null,
+                        b.getLibrary() != null ? b.getLibrary().getId() : null
+                ))
                 .collect(Collectors.toList());
     }
+
 
     public BookDTO getBookById(Long id) {
         Book b = bookDAO.findById(id);

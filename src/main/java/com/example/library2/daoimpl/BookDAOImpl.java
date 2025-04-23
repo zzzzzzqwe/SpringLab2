@@ -35,8 +35,15 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public List<Book> findAll() {
-        return getSession().createQuery("from Book", Book.class).list();
+        return getSession().createQuery(
+                "select b from Book b " +
+                        "join fetch b.author " +
+                        "join fetch b.category " +
+                        "join fetch b.publisher " +
+                        "join fetch b.library", Book.class
+        ).list();
     }
+
 
     @Override
     public void update(Book book) {

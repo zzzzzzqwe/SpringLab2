@@ -1,6 +1,6 @@
 package com.example.library2.controller;
 
-import com.example.library2.model.Author;
+import com.example.library2.dto.AuthorDTO;
 import com.example.library2.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +17,22 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAll() {
+    public List<AuthorDTO> getAll() {
         return authorService.getAllAuthors();
     }
 
     @GetMapping("/{id}")
-    public Author getOne(@PathVariable Long id) {
+    public AuthorDTO getOne(@PathVariable Long id) {
         return authorService.getAuthorById(id);
     }
 
     @PostMapping
-    public void create(@RequestBody Author author) {
+    public void create(@RequestBody AuthorDTO author) {
         authorService.createAuthor(author);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody Author author) {
+    public void update(@PathVariable Long id, @RequestBody AuthorDTO author) {
         authorService.updateAuthor(id, author);
     }
 
