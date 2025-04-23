@@ -4,10 +4,14 @@ import com.example.library2.dao.*;
 import com.example.library2.dto.BookDTO;
 import com.example.library2.model.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+
 @Service
+@Transactional
 public class BookService {
 
     private final BookDAO bookDAO;
@@ -37,7 +41,10 @@ public class BookService {
                         b.getLibrary() != null ? b.getLibrary().getId() : null
                 ))
                 .collect(Collectors.toList());
+
+
     }
+
 
 
     public BookDTO getBookById(Long id) {

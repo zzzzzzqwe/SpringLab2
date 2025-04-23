@@ -37,10 +37,10 @@ public class BookDAOImpl implements BookDAO {
     public List<Book> findAll() {
         return getSession().createQuery(
                 "select b from Book b " +
-                        "join fetch b.author " +
-                        "join fetch b.category " +
-                        "join fetch b.publisher " +
-                        "join fetch b.library", Book.class
+                        "left join fetch b.author " +
+                        "left join fetch b.category " +
+                        "left join fetch b.publisher " +
+                        "left join fetch b.library", Book.class
         ).list();
     }
 
